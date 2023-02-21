@@ -1,0 +1,8 @@
+<resources>
+    <!-- 앱네임은 properties로 뺄 수가 없네 (ISO-8859-1)-->
+    <string name="app_name">CS템플릿M3</string>
+    <string name="tab1">탭1</string>
+    <string name="tab2">탭2</string>
+    <string name="tab3">탭3</string>
+    <string name="tab4">탭4</string>
+</resources>

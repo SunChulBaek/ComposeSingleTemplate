@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.SubcomposeAsyncImage
 import com.example.composetemplate.data.model.Photo
 import com.example.composetemplate.event.NavItemReselectEvent
@@ -25,9 +26,11 @@ fun Tab1Screen(
     showSnackbar: (String) -> Unit,
     navigate: (String) -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState(Tab1UiState.Loading)
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
-    val reselectEvent by EventBus.subscribe<NavItemReselectEvent>().collectAsState(NavItemReselectEvent())
+    val reselectEvent by EventBus.subscribe<NavItemReselectEvent>().collectAsStateWithLifecycle(
+        initialValue = NavItemReselectEvent()
+    )
 
     LaunchedEffect(reselectEvent) {
         if (reselectEvent.route == route) {

@@ -88,6 +88,7 @@ dependencies {
     implementation(libs.lottie.compose)
 
     // Android Architecture Components
+    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
     implementation(libs.androidx.startup)

@@ -5,13 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -23,7 +18,6 @@ import com.example.composetemplate.ui.common.LoadingScreen
 import com.example.composetemplate.ui.common.PText
 import com.example.composetemplate.util.EventBus
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Tab1Screen(
     route: String,
@@ -31,13 +25,9 @@ fun Tab1Screen(
     showSnackbar: (String) -> Unit,
     navigate: (String) -> Unit
 ) {
-    val uiState = viewModel.uiState
+    val uiState by viewModel.uiState.collectAsState(Tab1UiState.Loading)
     val listState = rememberLazyListState()
     val reselectEvent by EventBus.subscribe<NavItemReselectEvent>().collectAsState(NavItemReselectEvent())
-
-    LaunchedEffect(true) {
-        viewModel.init()
-    }
 
     LaunchedEffect(reselectEvent) {
         if (reselectEvent.route == route) {
@@ -51,38 +41,38 @@ fun Tab1Screen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        if (uiState.isLoading) {
+        val isLoading = uiState is Tab1UiState.Loading
+        val isError = uiState is Tab1UiState.Error
+        val photos = (uiState as? Tab1UiState.Success)?.photos
+
+        if (isLoading) {
             LoadingScreen()
-        } else if (uiState.isError) {
+        } else if (isError) {
             ErrorScreen()
         } else {
-            val refreshing by remember { mutableStateOf(false) }
-            val pullRefreshState = rememberPullRefreshState(
-                refreshing = refreshing,
-                onRefresh = { viewModel.init(forced = true) })
-
-            Box(Modifier.pullRefresh(pullRefreshState)) {
+            Box(modifier = Modifier) {
                 LazyColumn(modifier = Modifier.fillMaxSize(), state = listState) {
                     items(
-                        count = uiState.photos.size,
-                        key = { index -> uiState.photos[index].id },
+                        count = photos?.size ?: 0,
                         itemContent = { index ->
-                            photoItem(uiState.photos[index]) {
+                            PhotoItem(photos!![index]) {
                                 showSnackbar("$index 번 째 아이템 클릭")
-                                val encoded = android.util.Base64.encodeToString(uiState.photos[index].url.toByteArray(), android.util.Base64.DEFAULT)
-                                navigate("photo/${uiState.photos[index].title}/$encoded")
+                                val encoded = android.util.Base64.encodeToString(
+                                    photos[index].url.toByteArray(),
+                                    android.util.Base64.DEFAULT
+                                )
+                                navigate("photo/${photos[index].title}/$encoded")
                             }
                         }
                     )
                 }
-                PullRefreshIndicator(refreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
             }
         }
     }
 }
 
 @Composable
-fun photoItem(item: Photo, onClick: () -> Unit) {
+fun PhotoItem(item: Photo, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 4.dp)

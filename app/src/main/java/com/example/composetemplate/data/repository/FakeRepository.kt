@@ -1,12 +1,13 @@
-package com.example.composetemplate.data
+package com.example.composetemplate.data.repository
 
-import javax.inject.Inject
-import javax.inject.Singleton
 import com.example.composetemplate.data.model.Photo
 import com.example.composetemplate.network.model.NetworkPhoto
 import com.example.composetemplate.network.model.asExternalModel
+import com.example.composetemplate.network.retrofit.ApiService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @Singleton
 class FakeRepository @Inject constructor(

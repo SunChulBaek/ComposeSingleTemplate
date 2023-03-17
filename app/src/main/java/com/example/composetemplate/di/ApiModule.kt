@@ -1,8 +1,8 @@
 package com.example.composetemplate.di
 
 import com.example.composetemplate.BuildConfig
-import com.example.composetemplate.data.ApiService
-import com.example.composetemplate.data.FakeRepository
+import com.example.composetemplate.network.retrofit.ApiService
+import com.example.composetemplate.data.repository.FakeRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

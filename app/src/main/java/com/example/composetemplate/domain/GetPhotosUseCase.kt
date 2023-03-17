@@ -1,6 +1,6 @@
 package com.example.composetemplate.domain
 
-import com.example.composetemplate.data.FakeRepository
+import com.example.composetemplate.data.repository.FakeRepository
 import com.example.composetemplate.data.model.Photo
 import com.example.composetemplate.util.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher

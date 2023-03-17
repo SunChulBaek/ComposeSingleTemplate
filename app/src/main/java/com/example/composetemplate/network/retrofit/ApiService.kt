@@ -1,7 +1,7 @@
-package com.example.composetemplate.data
+package com.example.composetemplate.network.retrofit
 
-import retrofit2.http.GET
 import com.example.composetemplate.network.model.NetworkPhoto
+import retrofit2.http.GET
 
 interface ApiService {
 

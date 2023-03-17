@@ -2,7 +2,6 @@ package com.example.composetemplate.ui.home.tab1
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.composetemplate.domain.GetPhotosParam
 import com.example.composetemplate.domain.GetPhotosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -15,7 +14,7 @@ class Tab1ViewModel @Inject constructor(
     getPhotosUseCase: GetPhotosUseCase
 ) : ViewModel() {
 
-    val uiState = getPhotosUseCase(GetPhotosParam())
+    val uiState = getPhotosUseCase(null)
         .map { result ->
             result.getOrNull()?.let {
                 Tab1UiState.Success(it)

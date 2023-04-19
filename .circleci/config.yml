@@ -2,6 +2,14 @@ version: 2.1
 orbs:
   android: circleci/android@2.2.0 # https://circleci.com/developer/orbs/orb/circleci/android for latest version
   slack: circleci/slack@4.10.1
+commands:
+  install_android_gradle_dependencies:
+    steps:
+      - android/restore-gradle-cache
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+      - android/save-gradle-cache
 jobs:
   build:
     executor:
@@ -16,11 +24,7 @@ jobs:
           command: sudo chmod +x ./gradlew
       - android/create-keystore-properties:
           release-keystore: keystore
-      - android/restore-gradle-cache
-      - run:
-          name: Download Dependencies
-          command: ./gradlew androidDependencies
-      - android/save-gradle-cache
+      - install_android_gradle_dependencies
       - run:
           name: Check Dependency Updates
           command: ./gradlew dependencyUpdates -Drevision=release -DoutputFormatter=plain

@@ -41,10 +41,10 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     create("release") {
                         val path = keystoreProperties.getProperty("storeFile")
                         if (path != null) {
-                            keyAlias = keystoreProperties.getProperty("keyAlias")
-                            keyPassword = keystoreProperties.getProperty("keyPassword")
-                            storeFile = rootProject.file(path)
-                            storePassword = keystoreProperties.getProperty("storePassword")
+                            keyAlias = keystoreProperties.getProperty("RELEASE_KEY_ALIAS")
+                            keyPassword = keystoreProperties.getProperty("RELEASE_KEY_PASSWORD")
+                            storeFile = rootProject.file(keystoreProperties.getProperty("PARAM_RELEASE_KEYSTORE"))
+                            storePassword = keystoreProperties.getProperty("RELEASE_STORE_PASSWORD")
                         }
                     }
                 }

@@ -31,9 +31,9 @@ commands:
         default: 1.0.0
         type: string
     steps:
-      -run:
-        name: Set Build Properties
-        command: sudo chmod +x ./setBuildProperties; ./setBuildProperties <<parameters.build-number>> "<<parameters.build-version>>"
+      - run:
+          name: Set Build Properties
+          command: sudo chmod +x ./setBuildProperties; ./setBuildProperties <<parameters.build-number>> "<<parameters.build-version>>"
 jobs:
   build:
     executor:

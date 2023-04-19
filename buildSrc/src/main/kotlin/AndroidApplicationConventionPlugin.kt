@@ -45,10 +45,10 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     create("release") {
                         val path = keystoreProperties.getProperty("storeFile")
                         if (path != null) {
-                            keyAlias = keystoreProperties.getProperty("RELEASE_KEY_ALIAS")
-                            keyPassword = keystoreProperties.getProperty("RELEASE_KEY_PASSWORD")
-                            storeFile = rootProject.file("${keystoreProperties.getProperty("PARAM_RELEASE_KEYSTORE")}/debug.keystore") // TODO : 릴리즈 키스토어로 변경
-                            storePassword = keystoreProperties.getProperty("RELEASE_STORE_PASSWORD")
+                            keyAlias = keystoreProperties.getProperty("releaseKeyAlias")
+                            keyPassword = keystoreProperties.getProperty("releaseKeyPassword")
+                            storeFile = rootProject.file("${keystoreProperties.getProperty("releaseKeyStore")}/debug.keystore") // TODO : 릴리즈 키스토어로 변경
+                            storePassword = keystoreProperties.getProperty("releaseStorePassword")
                         }
                     }
                 }

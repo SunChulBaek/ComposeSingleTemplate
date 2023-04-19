@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  android: circleci/android@2.0
+  android: circleci/android@2.2.0 # https://circleci.com/developer/orbs/orb/circleci/android for latest version
   slack: circleci/slack@4.10.1
 jobs:
   test:

@@ -39,7 +39,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     getByName("debug") {
                         keyAlias = "androiddebugkey"
                         keyPassword = "android"
-                        storeFile = rootProject.file(".keystore/debug.keystore")
+                        storeFile = rootProject.file("keystore/debug.keystore")
                         storePassword = "android"
                     }
                     create("release") {
@@ -47,7 +47,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                         if (path != null) {
                             keyAlias = keystoreProperties.getProperty("releaseKeyAlias")
                             keyPassword = keystoreProperties.getProperty("releaseKeyPassword")
-                            storeFile = rootProject.file("$path/debug.keystore") // TODO : 릴리즈 키스토어로 변경
+                            storeFile = rootProject.file("$path/release.keystore")
                             storePassword = keystoreProperties.getProperty("releaseStorePassword")
                         }
                     }

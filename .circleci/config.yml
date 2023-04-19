@@ -10,6 +10,30 @@ commands:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - android/save-gradle-cache
+  check_dependency_updates:
+    parameters:
+      revision:
+        default: release
+        type: string
+      output:
+        default: plain
+        type: string
+    steps:
+      - run:
+          name: Check Dependency Updates
+          command: ./gradlew dependencyUpdates -Drevision=<<parameters.revision>> -DoutputFormatter=<<parameters.output>>
+  set_build_properties:
+    parameters:
+      build-number:
+        default: $CIRCLE_BUILD_NUM
+        type: string
+      build-version:
+        default: 1.0.0
+        type: string
+    steps:
+      -run:
+        name: Set Build Properties
+        command: sudo chmod +x ./setBuildProperties; ./setBuildProperties <<parameters.build-number>> "<<parameters.build-version>>"
 jobs:
   build:
     executor:
@@ -25,12 +49,8 @@ jobs:
       - android/create-keystore-properties:
           release-keystore: keystore
       - install_android_gradle_dependencies
-      - run:
-          name: Check Dependency Updates
-          command: ./gradlew dependencyUpdates -Drevision=release -DoutputFormatter=plain
-      - run:
-          name: Set Build Properties
-          command: sudo chmod +x ./setBuildProperties; ./setBuildProperties $CIRCLE_BUILD_NUM "1.0.0"
+      - check_dependency_updates
+      - set_build_properties
       - run:
           name: Build Binaries
           command: ./gradlew assembleRelease;mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/CSTemplateM3-release-${CIRCLE_BUILD_NUM}.apk

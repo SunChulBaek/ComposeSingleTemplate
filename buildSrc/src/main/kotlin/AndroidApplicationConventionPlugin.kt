@@ -43,7 +43,10 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                         if (path != null) {
                             keyAlias = keystoreProperties.getProperty("releaseKeyAlias")
                             keyPassword = keystoreProperties.getProperty("releaseKeyPassword")
-                            storeFile = rootProject.file(path).listFiles { _, name -> name == "release.keystore" }.first()
+                            storeFile = rootProject.file(path).listFiles { _, name ->
+                                print("name = $name")
+                                name == "release.keystore"
+                            }.first()
                             storePassword = keystoreProperties.getProperty("releaseStorePassword")
                         }
                     }

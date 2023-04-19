@@ -3,7 +3,7 @@ orbs:
   android: circleci/android@2.2.0 # https://circleci.com/developer/orbs/orb/circleci/android for latest version
   slack: circleci/slack@4.10.1
 jobs:
-  test:
+  build:
     executor:
       name: android/android-docker
       tag: 2023.04.1
@@ -42,8 +42,4 @@ jobs:
 workflows:
   test:
     jobs:
-      - android/build:
-          executor:
-            name: android/android-docker
-            tag: 2023.04.1
-      - test
+      - build

@@ -43,7 +43,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                         storePassword = "android"
                     }
                     create("release") {
-                        val path = keystoreProperties.getProperty("storeFile")
+                        val path = keystoreProperties.getProperty("releaseKeyStore")
                         if (path != null) {
                             keyAlias = keystoreProperties.getProperty("releaseKeyAlias")
                             keyPassword = keystoreProperties.getProperty("releaseKeyPassword")

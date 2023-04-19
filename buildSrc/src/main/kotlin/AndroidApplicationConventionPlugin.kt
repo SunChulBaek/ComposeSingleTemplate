@@ -20,7 +20,11 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 val properties = Properties().apply { load(FileInputStream(propFile))}
 
                 val keystorePropFile = rootProject.file("keystore.properties")
-                val keystoreProperties = Properties().apply { load(FileInputStream(keystorePropFile)) }
+                val keystoreProperties = Properties().apply {
+                    if (keystorePropFile.exists()) {
+                        load(FileInputStream(keystorePropFile))
+                    }
+                }
 
                 configureKotlinAndroid(this)
 
@@ -35,7 +39,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     getByName("debug") {
                         keyAlias = "androiddebugkey"
                         keyPassword = "android"
-                        storeFile = rootProject.file("debug.keystore")
+                        storeFile = rootProject.file(".keystore/debug.keystore")
                         storePassword = "android"
                     }
                     create("release") {
@@ -43,7 +47,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                         if (path != null) {
                             keyAlias = keystoreProperties.getProperty("RELEASE_KEY_ALIAS")
                             keyPassword = keystoreProperties.getProperty("RELEASE_KEY_PASSWORD")
-                            storeFile = rootProject.file(keystoreProperties.getProperty("PARAM_RELEASE_KEYSTORE"))
+                            storeFile = rootProject.file("${keystoreProperties.getProperty("PARAM_RELEASE_KEYSTORE")}/debug.keystore") // TODO : 릴리즈 키스토어로 변경
                             storePassword = keystoreProperties.getProperty("RELEASE_STORE_PASSWORD")
                         }
                     }

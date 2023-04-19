@@ -19,6 +19,9 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 val propFile = rootProject.file("build.properties")
                 val properties = Properties().apply { load(FileInputStream(propFile))}
 
+                val keystorePropFile = rootProject.file("keystore.properties")
+                val keystoreProperties = Properties().apply { load(FileInputStream(keystorePropFile)) }
+
                 configureKotlinAndroid(this)
 
                 defaultConfig {
@@ -36,12 +39,12 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                         storePassword = "android"
                     }
                     create("release") {
-                        val path = properties.getProperty("storeFile")
+                        val path = keystoreProperties.getProperty("storeFile")
                         if (path != null) {
-                            keyAlias = properties.getProperty("keyAlias")
-                            keyPassword = properties.getProperty("keyPassword")
+                            keyAlias = keystoreProperties.getProperty("keyAlias")
+                            keyPassword = keystoreProperties.getProperty("keyPassword")
                             storeFile = rootProject.file(path)
-                            storePassword = properties.getProperty("storePassword")
+                            storePassword = keystoreProperties.getProperty("storePassword")
                         }
                     }
                 }

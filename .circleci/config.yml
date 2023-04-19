@@ -8,7 +8,7 @@ jobs:
       name: android/android-docker
       tag: 2023.04.1
     steps:
-      - android/change-java-version:
+      - change-java-version:
           java-version: 17
       - run:
           name: Chmod permissions # if permission for Gradlew Dependencies fail, use this.

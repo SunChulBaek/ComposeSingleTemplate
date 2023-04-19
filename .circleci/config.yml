@@ -17,9 +17,9 @@ jobs:
       - android/restore-gradle-cache
       - android/create-keystore-properties:
           release-keystore: keystore
-      - run:
-          name: Download Dependencies
-          command: ./gradlew androidDependencies
+#      - run:
+#          name: Download Dependencies
+#          command: ./gradlew androidDependencies
       - android/save-gradle-cache
       - run:
           name: Check Dependency Updates

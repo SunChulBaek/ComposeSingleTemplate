@@ -15,6 +15,7 @@ jobs:
           name: Chmod permissions # if permission for Gradlew Dependencies fail, use this.
           command: sudo chmod +x ./gradlew
       - android/restore-gradle-cache
+      - android/create-keystore-properties
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
@@ -22,7 +23,6 @@ jobs:
       - run:
           name: Check Dependency Updates
           command: ./gradlew dependencyUpdates -Drevision=release -DoutputFormatter=plain
-      - android/create-keystore-properties
       - run:
           name: Set Build Properties
           command: sudo chmod +x ./setBuildProperties; ./setBuildProperties $CIRCLE_BUILD_NUM "1.0.0"

@@ -3,6 +3,7 @@ import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import kr.pe.ssun.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.logging.LogLevel
 import org.gradle.kotlin.dsl.configure
 import java.io.FileInputStream
 import java.util.*
@@ -19,13 +20,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 val propFile = rootProject.file("build.properties")
                 val properties = Properties().apply { load(FileInputStream(propFile))}
 
-                val keystorePropFile = rootProject.file("keystore.properties")
-                val keystoreProperties = Properties().apply {
-                    if (keystorePropFile.exists()) {
-                        load(FileInputStream(keystorePropFile))
-                    }
-                }
-
                 configureKotlinAndroid(this)
 
                 defaultConfig {
@@ -39,15 +33,17 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     getByName("debug") {
                         keyAlias = "androiddebugkey"
                         keyPassword = "android"
-                        storeFile = rootProject.file("keystore/debug.keystore")
+                        storeFile = rootProject.file(".keystore/debug.keystore")
                         storePassword = "android"
                     }
                     create("release") {
+                        val keystorePropFile = rootProject.file("keystore.properties")
+                        val keystoreProperties = Properties().apply { load(FileInputStream(keystorePropFile)) }
                         val path = keystoreProperties.getProperty("releaseKeyStore")
                         if (path != null) {
                             keyAlias = keystoreProperties.getProperty("releaseKeyAlias")
                             keyPassword = keystoreProperties.getProperty("releaseKeyPassword")
-                            storeFile = rootProject.file("$path/release.keystore")
+                            storeFile = rootProject.file(path).listFiles { _, name -> name == "release.keystore" }.first()
                             storePassword = keystoreProperties.getProperty("releaseStorePassword")
                         }
                     }

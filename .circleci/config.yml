@@ -15,8 +15,7 @@ jobs:
           name: Chmod permissions # if permission for Gradlew Dependencies fail, use this.
           command: sudo chmod +x ./gradlew
       - android/restore-gradle-cache
-      - android/create-keystore-properties:
-          release-keystore: keystore
+      - android/create-keystore-properties
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies

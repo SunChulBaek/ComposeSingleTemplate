@@ -11,8 +11,8 @@ jobs:
       - android/change-java-version:
           java-version: 17
       - run:
-        name: Chmod permissions # if permission for Gradlew Dependencies fail, use this.
-        command: sudo chmod +x ./gradlew
+          name: Chmod permissions # if permission for Gradlew Dependencies fail, use this.
+          command: sudo chmod +x ./gradlew
       - android/restore-gradle-cache
       - run:
           name: Download Dependencies

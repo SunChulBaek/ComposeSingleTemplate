@@ -40,6 +40,6 @@ jobs:
           path: app/build/outputs/apk/release
           destination: apk
 workflows:
-  test:
+  build:
     jobs:
       - build

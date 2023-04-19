@@ -47,7 +47,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                         if (path != null) {
                             keyAlias = keystoreProperties.getProperty("releaseKeyAlias")
                             keyPassword = keystoreProperties.getProperty("releaseKeyPassword")
-                            storeFile = rootProject.file("${keystoreProperties.getProperty("releaseKeyStore")}/debug.keystore") // TODO : 릴리즈 키스토어로 변경
+                            storeFile = rootProject.file("$path/debug.keystore") // TODO : 릴리즈 키스토어로 변경
                             storePassword = keystoreProperties.getProperty("releaseStorePassword")
                         }
                     }

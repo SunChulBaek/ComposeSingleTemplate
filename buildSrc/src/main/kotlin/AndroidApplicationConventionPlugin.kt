@@ -33,12 +33,16 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     getByName("debug") {
                         keyAlias = "androiddebugkey"
                         keyPassword = "android"
-                        storeFile = rootProject.file(".keystore/debug.keystore")
+                        storeFile = rootProject.file("keystore/debug.keystore")
                         storePassword = "android"
                     }
                     create("release") {
                         val keystorePropFile = rootProject.file("keystore.properties")
-                        val keystoreProperties = Properties().apply { load(FileInputStream(keystorePropFile)) }
+                        val keystoreProperties = Properties().apply {
+                            if (keystorePropFile.exists()) {
+                                load(FileInputStream(keystorePropFile))
+                            }
+                        }
                         val path = keystoreProperties.getProperty("releaseKeyStore")
                         if (path != null) {
                             keyAlias = keystoreProperties.getProperty("releaseKeyAlias")

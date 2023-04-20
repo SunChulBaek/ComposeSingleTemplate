@@ -1,9 +1,11 @@
+# Gradle Versions Plugin 설정 되어있지 않으면 check_dependency_updates 커맨드에서 에러가 발생할 것 같습니다.
 version: 2.1
 orbs:
   android: circleci/android@2.2.0 # https://circleci.com/developer/orbs/orb/circleci/android
   slack: circleci/slack@4.12.1 # https://circleci.com/developer/orbs/orb/circleci/slack
 commands:
   chmod_permission:
+    description: if permission for Gradlew Dependencies fail, use this.
     steps:
       - run:
           name: Chmod permissions # if permission for Gradlew Dependencies fail, use this.
@@ -16,6 +18,7 @@ commands:
           command: ./gradlew androidDependencies
       - android/save-gradle-cache
   check_dependency_updates:
+    description: 업데이트 가능한 라이브러리 확인 (https://github.com/ben-manes/gradle-versions-plugin)
     parameters:
       revision:
         default: release
@@ -39,7 +42,7 @@ commands:
       - run:
           name: Set Build Properties
           command: sudo chmod +x ./setBuildProperties; ./setBuildProperties <<parameters.build-number>> "<<parameters.build-version>>"
-  build_and_archive: # 여기는 좀 더 개선이 필요할듯
+  build_and_archive: # TODO : 여기는 좀 더 개선이 필요할듯
     parameters:
       command:
         default: assembleRelease

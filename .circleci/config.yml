@@ -3,6 +3,11 @@ orbs:
   android: circleci/android@2.2.0 # https://circleci.com/developer/orbs/orb/circleci/android for latest version
   slack: circleci/slack@4.10.1
 commands:
+  chmod_permission:
+    steps:
+      - run:
+          name: Chmod permissions # if permission for Gradlew Dependencies fail, use this.
+          command: sudo chmod +x ./gradlew
   install_android_gradle_dependencies:
     steps:
       - android/restore-gradle-cache
@@ -80,9 +85,7 @@ jobs:
       - checkout
       - android/change-java-version:
           java-version: 17
-      - run:
-          name: Chmod permissions # if permission for Gradlew Dependencies fail, use this.
-          command: sudo chmod +x ./gradlew
+      - chmod_permission
       - android/create-keystore-properties:
           release-keystore: keystore
       - install_android_gradle_dependencies

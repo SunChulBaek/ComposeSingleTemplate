@@ -34,6 +34,40 @@ commands:
       - run:
           name: Set Build Properties
           command: sudo chmod +x ./setBuildProperties; ./setBuildProperties <<parameters.build-number>> "<<parameters.build-version>>"
+  build_and_archive: # 여기는 좀 더 개선이 필요할듯
+    parameters:
+      command:
+        default: assembleRelease
+        type: string
+      path:
+        default: app/build/outputs/apk/release
+        type: string
+      source:
+        default: app-release.apk
+        type: string
+      target:
+        type: string
+      destination:
+        default: apk
+        type: string
+    steps:
+      - run:
+          name: Build Binaries
+          command: ./gradlew <<parameters.command>>
+      - run:
+          name: Change File Name
+          command: mv <<parameters.path>>/<<parameters.source>> <<parameters.path>>/<<parameters.target>>
+      - store_artifacts:
+          path: <<parameters.path>>
+          destination: <<parameters.destination>>
+  slack_notify:
+    steps:
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: basic_success_1
 jobs:
   build:
     executor:
@@ -51,18 +85,9 @@ jobs:
       - install_android_gradle_dependencies
       - check_dependency_updates
       - set_build_properties
-      - run:
-          name: Build Binaries
-          command: ./gradlew assembleRelease;mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/CSTemplateM3-release-${CIRCLE_BUILD_NUM}.apk
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: basic_success_1
-      - store_artifacts:
-          path: app/build/outputs/apk/release
-          destination: apk
+      - build_and_archive:
+          target: CSTemplate-v${CIRCLE_BUILD_NUM}.apk
+      - slack_notify
 workflows:
   build:
     jobs:

@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
-  android: circleci/android@2.2.0 # https://circleci.com/developer/orbs/orb/circleci/android for latest version
-  slack: circleci/slack@4.10.1
+  android: circleci/android@2.2.0 # https://circleci.com/developer/orbs/orb/circleci/android
+  slack: circleci/slack@4.12.1 # https://circleci.com/developer/orbs/orb/circleci/slack
 commands:
   chmod_permission:
     steps:

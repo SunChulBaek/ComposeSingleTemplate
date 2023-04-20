@@ -52,6 +52,9 @@ commands:
         type: string
     steps:
       - run:
+          name: Check Java Version
+          command: java --version
+      - run:
           name: Build Binaries
           command: ./gradlew <<parameters.command>>
       - run:
@@ -72,7 +75,7 @@ jobs:
   build:
     executor:
       name: android/android-docker
-      tag: 2023.04.1
+      tag: 2023.04.1 # https://circleci.com/developer/images/image/cimg/android#image-tags
     steps:
       - checkout
       - android/change-java-version:

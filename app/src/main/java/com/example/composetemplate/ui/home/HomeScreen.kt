@@ -16,10 +16,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.composetemplate.BuildConfig
 import com.example.composetemplate.R
 import com.example.composetemplate.event.NavItemReselectEvent
-import com.example.composetemplate.ui.common.PText
 import com.example.composetemplate.ui.home.tab1.Tab1Screen
 import com.example.composetemplate.ui.home.tab2.Tab2Screen
 import com.example.composetemplate.ui.home.tab3.Tab3Screen
@@ -37,7 +35,7 @@ sealed class Screen(
     @DrawableRes val iconSelected: Int,
     val route: String,
     @StringRes val resourceId: Int,
-    val content: (@Composable (String, (String) -> Unit, (String) -> Unit) -> Unit)
+    val content: (@Composable (String, (String) -> Unit, (String, Any?) -> Unit) -> Unit)
 ) {
     object Tab1 : Screen(R.drawable.ic_place_outline, R.drawable.ic_place, "tab1", R.string.tab1, { route, showSnackbar, navigate ->
         Tab1Screen(route = route, showSnackbar = showSnackbar, navigate = navigate)
@@ -65,7 +63,7 @@ var toast: Toast? = null
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    navigate: (String) -> Unit,
+    navigate: (String, Any?) -> Unit,
     showToast: (String) -> Toast,
     onBack: () -> Unit
 ) {
@@ -132,7 +130,7 @@ fun BackCloseHandler(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyTopAppBar() = TopAppBar(
-    title = { PText(stringResource(R.string.app_name))},
+    title = { Text(stringResource(R.string.app_name))},
     navigationIcon = {
         IconButton(onClick = { }) {
             Icon(Icons.Default.Menu, "Menu")
@@ -153,7 +151,7 @@ fun MyBottomNavigation(navController: NavHostController, items: List<Screen>, on
                 } else {
                     screen.icon
                 }), null) },
-            label = { PText(stringResource(screen.resourceId)) },
+            label = { Text(stringResource(screen.resourceId)) },
             selected = selectedItem == index,
             onClick = {
                 selectedItem = index
@@ -182,7 +180,7 @@ fun HomeNavHost(
     navController: NavHostController,
     items: List<Screen>,
     startDestination: Screen,
-    navigate: (String) -> Unit,
+    navigate: (String, Any?) -> Unit,
     showSnackbar: (String) -> Unit
 ) {
     AnimatedNavHost(
@@ -208,7 +206,7 @@ fun HomeNavHost(
                     // showSnackbar
                     { text -> showSnackbar(text) },
                     // 상세화면 네비게이션
-                    { route -> navigate.invoke(route) }
+                    { route, parmas -> navigate(route, parmas) }
                 )
             }
         }

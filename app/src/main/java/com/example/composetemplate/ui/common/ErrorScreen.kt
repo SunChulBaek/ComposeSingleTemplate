@@ -33,7 +33,7 @@ fun ErrorScreen() {
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onErrorContainer),
                 contentDescription = "error"
             )
-            PText(
+            Text(
                 text = "에러가 발생했습니다.",
                 color = MaterialTheme.colorScheme.onErrorContainer
             )

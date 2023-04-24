@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.SubcomposeAsyncImage
-import com.example.composetemplate.ui.common.PText
 
 @Composable
 fun PhotoDetailScreen(title: String?, url: String?) {
@@ -37,7 +36,7 @@ fun PhotoDetailScreen(title: String?, url: String?) {
             },
             contentDescription = "thumbnail"
         )
-        PText(
+        Text(
             modifier = Modifier.constrainAs(titleRef) {
                 top.linkTo(imageRef.bottom)
                 start.linkTo(parent.start)

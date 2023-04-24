@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.composetemplate.event.NavItemReselectEvent
-import com.example.composetemplate.ui.common.PText
 import com.example.composetemplate.util.EventBus
 
 @Composable
@@ -23,7 +21,7 @@ fun Tab3Screen(
     route: String,
     viewModel: Tab3ViewModel = hiltViewModel(),
     showSnackbar: (String) -> Unit,
-    navigate: (String) -> Unit
+    navigate: (String, Any?) -> Unit
 ) {
     val uiState = viewModel.uiState
     val reselectEvent by EventBus.subscribe<NavItemReselectEvent>().collectAsState(NavItemReselectEvent())
@@ -48,7 +46,7 @@ fun Tab3Screen(
             modifier = Modifier.align(Alignment.Center),
             onClick = { showSnackbar("$route 클릭") }
         ) {
-            PText(
+            Text(
                 text = uiState.text,
             )
         }

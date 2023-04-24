@@ -13,8 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.composetemplate.event.NavItemReselectEvent
-import com.example.composetemplate.ui.common.MyWebView
-import com.example.composetemplate.ui.common.PText
 import com.example.composetemplate.util.EventBus
 
 @Composable
@@ -22,7 +20,7 @@ fun Tab2Screen(
     route: String,
     viewModel: Tab2ViewModel = hiltViewModel(),
     showSnackbar: (String) -> Unit,
-    navigate: (String) -> Unit
+    navigate: (String, Any?) -> Unit
 ) {
     val uiState = viewModel.uiState
     val reselectEvent by EventBus.subscribe<NavItemReselectEvent>().collectAsState(NavItemReselectEvent())
@@ -47,10 +45,10 @@ fun Tab2Screen(
             modifier = Modifier.align(Alignment.Center),
             onClick = {
                 val encoded = Base64.encodeToString("https://www.google.com".toByteArray(), Base64.DEFAULT)
-                navigate("webview/$encoded")
+                navigate("webview/$encoded", null)
             }
         ) {
-            PText(
+            Text(
                 text = uiState.text,
             )
         }

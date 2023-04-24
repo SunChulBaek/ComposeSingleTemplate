@@ -5,6 +5,8 @@ plugins {
 }
 
 android {
+    namespace = "com.example.composetemplate"
+
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

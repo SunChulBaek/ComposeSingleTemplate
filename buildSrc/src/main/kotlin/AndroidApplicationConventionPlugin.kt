@@ -64,6 +64,9 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                         proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
                     }
                 }
+                buildFeatures {
+                    buildConfig = true
+                }
                 //configureFlavors(this)
             }
             extensions.configure<ApplicationAndroidComponentsExtension> {

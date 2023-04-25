@@ -91,7 +91,7 @@ jobs:
       - chmod_permission
       - android/decode-keystore:
           keystore-location: ./keystore # create-keystore-properties 기본값
-      - android/create-keystore-properties:
+      - android/create-keystore-properties
       - install_android_gradle_dependencies
       - check_dependency_updates
       - set_build_properties

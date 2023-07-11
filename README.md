@@ -1,4 +1,4 @@
-# ComposeSingleTemplate [![CircleCI](https://dl.circleci.com/status-badge/img/gh/SunChulBaek/ComposeSingleTemplate/tree/main.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/SunChulBaek/ComposeSingleTemplate/tree/main)
+# ComposeSingleTemplate ![Build Badge](https://github.com/SunChulBaek/ComposeSingleTemplate/actions/workflows/build.yml/badge.svg)
 * Architecture
   * [Compose](https://developer.android.com/jetpack/compose?hl=ko)
   * [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)

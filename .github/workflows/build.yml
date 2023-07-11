@@ -1,0 +1,88 @@
+# 정의 해야 할 것
+# secrets:
+#   APP_ID
+#   BASE64_KEYSTORE
+#   RELEASE_KEY_ALIAS
+#   RELEASE_KEY_PASSWORD
+#   RELEASE_STORE_PASSWORD
+#   SLACK_CHANNEL_ID
+#   SLACK_TOKEN
+#   SLACK_WEBHOOK_URL
+# vars:
+#   APP_NAME
+
+name: Build
+
+on: push
+
+env:
+  VERSION_CODE: ${{ github.run_number }}
+  VERSION_NAME: 1.0.0
+  COMPILE_SDK: 33
+  MIN_SDK: 21
+  TARGET_SDK: 33
+  JAVA_DISTRIBUTION: corretto
+  JAVA_VERSION: 17
+  APK_PATH: app/build/outputs/apk/release
+  KEYSTORE: keystore
+  KEYSTORE_PROPERTIES: keystore.properties
+  BUILD_PROPERTIES: build.properties
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Chmod Permission
+        run: sudo chmod +x ./gradlew
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: 'gradle'
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+      - name: Decode Keystore
+        run: echo ${{ secrets.BASE64_KEYSTORE }} | base64 -d > ${{ env.KEYSTORE }}
+      - name: Create Keystore Properties
+        run: |
+          echo "releaseKeyAlias=${{ secrets.RELEASE_KEY_ALIAS }}" > ${{ env.KEYSTORE_PROPERTIES }}
+          echo "releaseKeyPassword=${{ secrets.RELEASE_KEY_PASSWORD }}" >> ${{ env.KEYSTORE_PROPERTIES }}
+          echo "releaseKeyStore=${{ env.KEYSTORE }}" >> ${{ env.KEYSTORE_PROPERTIES }}
+          echo "releaseStorePassword=${{ secrets.RELEASE_STORE_PASSWORD }}" >> ${{ env.KEYSTORE_PROPERTIES }}
+      - name: Download Dependencies
+        run: ./gradlew androidDependencies
+      - name: Check Dependency Updates
+        run: ./gradlew dependencyUpdates -Drevision=release -DoutputFormatter=plain
+      - name: Set Build Properties
+        run: |
+          echo applicationId=${{ secrets.APP_ID }} > $BUILD_PROPERTIES
+          echo compileSdk=${{ env.COMPILE_SDK }} >> $BUILD_PROPERTIES
+          echo minSdk=${{ env.MIN_SDK }} >> $BUILD_PROPERTIES
+          echo targetSdk=${{ env.TARGET_SDK }} >> $BUILD_PROPERTIES
+          echo versionCode=${{ env.VERSION_CODE }} >> $BUILD_PROPERTIES
+          echo versionName=${{ env.VERSION_NAME }} >> $BUILD_PROPERTIES
+      - name: Build Binary
+        run: ./gradlew assembleRelease
+      - name: Send Slack Message
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,ref # repo,message,commit,author,action,eventName,ref,workflow,job,took,pullRequest # selectable (default: repo,message)
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()
+      - name: Change File Name
+        run: mv ${{ env.APK_PATH }}/app-release.apk ${{ env.APK_PATH }}/${{ vars.APP_NAME }}-${{ env.VERSION_CODE }}.apk
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ vars.APP_NAME }}-${{ env.VERSION_CODE }}
+          path: ${{ env.APK_PATH }}/*.apk
+      - name: Slack Upload Artifacts
+        uses: MeilCli/slack-upload-file@v3
+        with:
+          slack_token: ${{ secrets.SLACK_TOKEN }}
+          channel_id: ${{ secrets.SLACK_CHANNEL_ID }}
+          file_path: '${{ env.APK_PATH }}/${{ vars.APP_NAME }}-${{ env.VERSION_CODE }}.apk'

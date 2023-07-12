@@ -36,7 +36,7 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
-      - uses: ./.github/actions/chmod_permission
+      - uses: ./.github/actions/chmod-permission
       - uses: ./.github/actions/decode-keystore
         with:
           base64-keystore: ${{ secrets.BASE64_KEYSTORE }}

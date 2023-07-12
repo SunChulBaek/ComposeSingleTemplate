@@ -1,0 +1,7 @@
+name: "Chmod Permission"
+description: "Chmod Permission"
+runs:
+  using: "composite"
+  steps:
+    - run: sudo chmod +x ./gradlew
+      shell: bash

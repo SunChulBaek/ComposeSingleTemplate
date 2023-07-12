@@ -1,0 +1,15 @@
+name: "Install Android Gradle Dependencies"
+description: "Install Android Gradle Dependencies"
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+    - run: ./gradlew androidDependencies
+      shell: bash

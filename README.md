@@ -8,5 +8,5 @@
   * [Accompanist](https://github.com/google/accompanist)
   * [Coil](https://coil-kt.github.io/coil/)
   * [core-splashscreen](https://developer.android.com/reference/kotlin/androidx/core/splashscreen/SplashScreen)
-  * [Retrofit](https://square.github.io/retrofit/)
+  * [Ktor](https://ktor.io/)
   * [Timber](https://github.com/JakeWharton/timber)

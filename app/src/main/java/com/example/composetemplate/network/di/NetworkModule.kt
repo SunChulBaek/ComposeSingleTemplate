@@ -1,7 +1,7 @@
 package com.example.composetemplate.network.di
 
 import com.example.composetemplate.network.SsunNetworkDataSource
-import com.example.composetemplate.network.retrofit.RetrofitSsunNetwork
+import com.example.composetemplate.network.ktor.KtorSsunNetwork
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -11,5 +11,5 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 interface SsunNetworkModule {
     @Binds
-    fun RetrofitSsunNetwork.binds(): SsunNetworkDataSource
+    fun KtorSsunNetwork.binds(): SsunNetworkDataSource
 }

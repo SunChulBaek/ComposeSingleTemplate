@@ -95,10 +95,12 @@ dependencies {
 
     implementation(libs.androidx.startup)
 
-    // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.gson.converter)
-    implementation(libs.okhttp.logging.interceptor)
+    // Ktor
+    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.client.content.negotitation)
+    implementation(libs.ktor.serialization.gson)
 
     // Coil
     implementation(libs.coil.kt)

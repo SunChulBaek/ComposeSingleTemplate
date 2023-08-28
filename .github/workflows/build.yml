@@ -18,9 +18,9 @@ on: push
 env:
   JAVA_DISTRIBUTION: corretto
   JAVA_VERSION: 17
-  COMPILE_SDK: 33
+  COMPILE_SDK: 34
   MIN_SDK: 21
-  TARGET_SDK: 33
+  TARGET_SDK: 34
   VERSION_CODE: ${{ github.run_number }}
   VERSION_NAME: 1.0.0
 

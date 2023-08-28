@@ -23,14 +23,14 @@ fun MyWebView(modifier: Modifier = Modifier, url: String) {
         state = webViewState,
         navigator = webViewNavigator,
         client = object : AccompanistWebViewClient() {
-            override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+            override fun onReceivedError(view: WebView, request: WebResourceRequest?, error: WebResourceError?) {
                 super.onReceivedError(view, request, error)
                 Timber.d("[템플릿] onReceivedError")
                 webViewProgress = WEBVIEW_PROGRESS_ERROR
             }
         },
         chromeClient = object : AccompanistWebChromeClient() {
-            override fun onProgressChanged(view: WebView?, newProgress: Int) {
+            override fun onProgressChanged(view: WebView, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
                 Timber.d("[템플릿] onProgressChanged($newProgress)")
                 if (webViewProgress != WEBVIEW_PROGRESS_ERROR) {

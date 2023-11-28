@@ -9,7 +9,7 @@ import java.io.File
 
 // androidx.compose:compose-bom을 추가
 internal fun Project.configureAndroidCompose(
-    commonExtension: CommonExtension<*, *, *, *>,
+    commonExtension: CommonExtension<*, *, *, *, *>,
 ) {
     // libs.versions.toml에서 불러온 내용
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")

@@ -5,8 +5,8 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import com.example.composetemplate.ui.home.HomeScreen
-import com.google.accompanist.navigation.animation.composable
 
 const val homeNavigationRoute = "home"
 

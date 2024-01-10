@@ -15,7 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.example.composetemplate.R
 import com.example.composetemplate.event.NavItemReselectEvent
 import com.example.composetemplate.ui.home.tab1.Tab1Screen
@@ -23,9 +26,6 @@ import com.example.composetemplate.ui.home.tab2.Tab2Screen
 import com.example.composetemplate.ui.home.tab3.Tab3Screen
 import com.example.composetemplate.ui.home.tab4.Tab4Screen
 import com.example.composetemplate.util.EventBus
-import com.google.accompanist.navigation.animation.composable
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -67,7 +67,7 @@ fun HomeScreen(
     showToast: (String) -> Toast,
     onBack: () -> Unit
 ) {
-    val navController = rememberAnimatedNavController()
+    val navController = rememberNavController()
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -183,7 +183,7 @@ fun HomeNavHost(
     navigate: (String, Any?) -> Unit,
     showSnackbar: (String) -> Unit
 ) {
-    AnimatedNavHost(
+    NavHost(
         navController = navController,
         startDestination = startDestination.route
     ) {

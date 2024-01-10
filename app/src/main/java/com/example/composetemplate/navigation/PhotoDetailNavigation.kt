@@ -8,8 +8,8 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import androidx.navigation.compose.composable
 import com.example.composetemplate.ui.detail.PhotoDetailScreen
-import com.google.accompanist.navigation.animation.composable
 
 const val photoDetailNavigationRoute = "photo_detail"
 

@@ -80,7 +80,7 @@ fun defaultEnterTransition(): EnterTransition = slideInHorizontally(
 )
 
 fun defaultExitTransition(): ExitTransition = slideOutHorizontally(
-    targetOffsetX = { fullHeight -> fullHeight },
+    targetOffsetX = { fullHeight -> -fullHeight },
     animationSpec = tween(
         durationMillis = 300,
         easing = FastOutSlowInEasing

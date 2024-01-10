@@ -4,7 +4,6 @@ import android.util.Base64
 import android.widget.Toast
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -21,7 +20,6 @@ fun NavController.navigateToPhotoDetail(title: String, url: String, navOptions: 
     this.navigate("$photoDetailNavigationRoute/$title/$encoded", navOptions)
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.photoDetailScreen(
     enterTransition: EnterTransition = EnterTransition.None,
     exitTransition: ExitTransition = ExitTransition.None,

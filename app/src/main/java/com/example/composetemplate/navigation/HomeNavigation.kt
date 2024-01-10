@@ -3,14 +3,12 @@ package com.example.composetemplate.navigation
 import android.widget.Toast
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.example.composetemplate.ui.home.HomeScreen
 
 const val homeNavigationRoute = "home"
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.homeScreen(
     enterTransition: EnterTransition = EnterTransition.None,
     exitTransition: ExitTransition = ExitTransition.None,

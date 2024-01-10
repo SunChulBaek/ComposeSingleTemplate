@@ -36,8 +36,6 @@ dependencies {
     implementation(libs.accompanist.appcompat.theme)
     implementation(libs.accompanist.drawablepainter)
     implementation(libs.accompanist.flowlayout)
-    implementation(libs.accompanist.navigation.animation)
-    implementation(libs.accompanist.navigation.material)
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicator)
     implementation(libs.accompanist.permissions)

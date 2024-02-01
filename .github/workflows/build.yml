@@ -1,6 +1,5 @@
 # 정의 해야 할 것
 # secrets:
-#   APP_ID
 #   BASE64_KEYSTORE
 #   RELEASE_KEY_ALIAS
 #   RELEASE_KEY_PASSWORD
@@ -18,9 +17,6 @@ on: push
 env:
   JAVA_DISTRIBUTION: corretto
   JAVA_VERSION: 17
-  COMPILE_SDK: 34
-  MIN_SDK: 21
-  TARGET_SDK: 34
   VERSION_CODE: ${{ github.run_number }}
   VERSION_NAME: 1.0.0
 
@@ -36,10 +32,6 @@ jobs:
           release-key-alias: ${{ secrets.RELEASE_KEY_ALIAS }}
           release-key-password: ${{ secrets.RELEASE_KEY_PASSWORD }}
           release-store-password: ${{ secrets.RELEASE_STORE_PASSWORD }}
-          application-id: ${{ secrets.APP_ID }}
-          compile-sdk: ${{ env.COMPILE_SDK }}
-          min-sdk: ${{ env.MIN_SDK }}
-          target-sdk: ${{ env.TARGET_SDK }}
           version-code: ${{ env.VERSION_CODE }}
           version-name: ${{ env.VERSION_NAME }}
           artifact-name: "${{ vars.APK_NAME }}-${{ env.VERSION_CODE }}"

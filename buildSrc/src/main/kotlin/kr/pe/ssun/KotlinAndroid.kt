@@ -17,13 +17,10 @@ internal fun Project.configureKotlinAndroid(
     commonExtension: CommonExtension<*, *, *, *, *>,
 ) {
     commonExtension.apply {
-        val propFile = rootProject.file("build.properties")
-        val properties = Properties().apply { load(FileInputStream(propFile))}
-
-        compileSdk = properties.getProperty("compileSdk").toInt()
+        compileSdk = 34
 
         defaultConfig {
-            minSdk = properties.getProperty("minSdk").toInt()
+            minSdk = 21
         }
 
         compileOptions {

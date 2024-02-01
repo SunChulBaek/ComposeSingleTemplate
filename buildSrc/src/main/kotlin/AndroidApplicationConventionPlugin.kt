@@ -23,8 +23,8 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 configureKotlinAndroid(this)
 
                 defaultConfig {
-                    applicationId = properties.getProperty("applicationId")
-                    targetSdk = properties.getProperty("targetSdk").toInt()
+                    applicationId = "com.example.composetemplate"
+                    targetSdk = 34
                     versionCode = properties.getProperty("versionCode").toInt()
                     versionName = properties.getProperty("versionName")
                 }
